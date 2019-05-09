@@ -4,8 +4,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="shortcut icon" href="#">
-    <title>Friend Finder</title> 
+    <link rel="shortcut icon" href="#">
+    <title>Friend Finder</title>
 </head>
 
 <body>
@@ -55,8 +55,8 @@
         <h3><strong>Question Three</strong></h3>
         <div class="form-group">
             <label for="q3"><strong>You see popcorn in someone elses hands and your suppress the desire
-                to knock it out of their hands.
-            </strong></label>
+                    to knock it out of their hands.
+                </strong></label>
             <select class="custom-select" id="q3">
                 <option selected>Choose One . . .</option>
                 <option values="1">1 (Strongly Disagree</option>
@@ -141,9 +141,9 @@
         </div>
         <h3><strong>Question Ten</strong></h3>
         <div class="form-group">
-            <label for="q10"><strong>Ladders should be illegal and we should all just stand on 
-                eachothers shoulders like cheerleaders whenever we need something really high up.
-            </strong></label>
+            <label for="q10"><strong>Ladders should be illegal and we should all just stand on
+                    eachothers shoulders like cheerleaders whenever we need something really high up.
+                </strong></label>
             <select class="custom-select" id="q10">
                 <option selected>Choose One . . .</option>
                 <option values="1">1 (Strongly Disagree</option>
@@ -154,40 +154,53 @@
             </select>
         </div>
 
-        <div class = "text-right">
-            <button type = "submit" class="btn btn-primary btn-md" id = "submitSurvey">
-                <span class = "fa fa-fire"></span>Finish!
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary btn-md" id="submitSurvey">
+                <span class="fa fa-fire"></span>Finish!
             </button>
         </div>
     </div>
 </body>
 <script>
-    $("#submitSurvey").on("click", (event) => {
-        event.preventDefault();
-        let newFriend = {
-        name: $("#nameInput").val().trim(),
-        photo: $("#photoInput").val().trim(),
-        scores: [parseInt($("#q1 option:selected").attr("values")),
-        $("#q2 option:selected").attr("values"),
-        $("#q3 option:selected").attr("values"),
-        $("#q4 option:selected").attr("values"),
-        $("#q5 option:selected").attr("values"),
-        $("#q6 option:selected").attr("values"),
-        $("#q7 option:selected").attr("values"),
-        $("#q8 option:selected").attr("values"),
-        $("#q9 option:selected").attr("values"),
-        $("#q10 option:selected").attr("values")
-        ]    
-        };
-        //scores.push($("#q1 "),$("#q2"),$("#q3"),$("#q4"));
-        console.log('newFriend', newFriend);
-        $.post("/api/friends", newFriend).then((data) => {
-            console.log("survey.html", data); alert("Thank you for taking our survey!");
-        })
-        .catch(err => {
-            console.log(err);
-        });   
-    });
+    //form validation
+    var allInput = true;
+    //if ($("option:select") == "") {
+        console.log("Please fill all out forms!");
+
+    //} else {
+        
+
+        $("#submitSurvey").on("click", (event) => {
+            event.preventDefault();
+            let newFriend = {
+                name: $("#nameInput").val().trim(),
+                photo: $("#photoInput").val().trim(),
+                scores: [parseInt($("#q1 option:selected").attr("values")),
+                    $("#q2 option:selected").attr("values"),
+                    $("#q3 option:selected").attr("values"),
+                    $("#q4 option:selected").attr("values"),
+                    $("#q5 option:selected").attr("values"),
+                    $("#q6 option:selected").attr("values"),
+                    $("#q7 option:selected").attr("values"),
+                    $("#q8 option:selected").attr("values"),
+                    $("#q9 option:selected").attr("values"),
+                    $("#q10 option:selected").attr("values")
+                ]
+            };
+            //scores.push($("#q1 "),$("#q2"),$("#q3"),$("#q4"));
+            console.log('newFriend', newFriend);
+            $.post("/api/friends", newFriend).then((data) => {
+                    console.log("survey.html", data);
+                    alert("Thank you for taking our survey!");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            $.get("/api/friends", friends).then((data) => {
+                return json(data);
+            })
+        });
+   // }
 </script>
 
 </html>
