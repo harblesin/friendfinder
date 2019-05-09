@@ -1,9 +1,12 @@
 <html>
 
 <head>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <link rel="shortcut icon" href="#">
     <title>Friend Finder</title>
 </head>
@@ -160,47 +163,75 @@
             </button>
         </div>
     </div>
+    <div class="modal" id="matchDisplay">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Best Match</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="matchName"></p>
+                    <img class="matchPic" style="margin: auto">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 <script>
     //form validation
     var allInput = true;
     //if ($("option:select") == "") {
-        console.log("Please fill all out forms!");
+    console.log("Please fill all out forms!");
 
     //} else {
-        
 
-        $("#submitSurvey").on("click", (event) => {
-            event.preventDefault();
-            let newFriend = {
-                name: $("#nameInput").val().trim(),
-                photo: $("#photoInput").val().trim(),
-                scores: [parseInt($("#q1 option:selected").attr("values")),
-                    $("#q2 option:selected").attr("values"),
-                    $("#q3 option:selected").attr("values"),
-                    $("#q4 option:selected").attr("values"),
-                    $("#q5 option:selected").attr("values"),
-                    $("#q6 option:selected").attr("values"),
-                    $("#q7 option:selected").attr("values"),
-                    $("#q8 option:selected").attr("values"),
-                    $("#q9 option:selected").attr("values"),
-                    $("#q10 option:selected").attr("values")
-                ]
-            };
-            //scores.push($("#q1 "),$("#q2"),$("#q3"),$("#q4"));
-            console.log('newFriend', newFriend);
-            $.post("/api/friends", newFriend).then((data) => {
-                    console.log("survey.html", data);
-                    alert("Thank you for taking our survey!");
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-            $.get("/api/friends", friends).then((data) => {
-                return json(data);
+
+    $("#submitSurvey").on("click", (event) => {
+        event.preventDefault();
+        let newFriend = {
+            name: $("#nameInput").val().trim(),
+            photo: $("#photoInput").val().trim(),
+            scores: [parseInt($("#q1 option:selected").attr("values")),
+                $("#q2 option:selected").attr("values"),
+                $("#q3 option:selected").attr("values"),
+                $("#q4 option:selected").attr("values"),
+                $("#q5 option:selected").attr("values"),
+                $("#q6 option:selected").attr("values"),
+                $("#q7 option:selected").attr("values"),
+                $("#q8 option:selected").attr("values"),
+                $("#q9 option:selected").attr("values"),
+                $("#q10 option:selected").attr("values")
+            ]
+        };
+        //scores.push($("#q1 "),$("#q2"),$("#q3"),$("#q4"));
+        console.log('newFriend', newFriend);
+        $.post("/api/friends", newFriend, (data) => {
+                console.log("survey.html", data);
+                alert("Thank you for taking our survey!");
+
+
+
             })
-        });
-   // }
+            .catch(err => {
+                console.log(err);
+            });
+        $.get("/api/friends").then((data) => {
+
+            $('.matchName').text(data[9].name);
+            $('.matchPic').attr("src", data[9].photo);
+
+            $('#matchDisplay').modal("toggle");
+            // return json(data);
+        })
+    });
+    // }
 </script>
 
 </html>
