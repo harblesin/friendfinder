@@ -211,23 +211,30 @@
             ]
         };
         //scores.push($("#q1 "),$("#q2"),$("#q3"),$("#q4"));
-        console.log('newFriend', newFriend);
+        //console.log('newFriend', newFriend);
         $.post("/api/friends", newFriend, (data) => {
-                console.log("survey.html", data);
-                alert("Thank you for taking our survey!");
+            console.log("survey.html", data);
+            //alert("Thank you for taking our survey!");
+            showStuff(data);
 
 
+        });
 
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        function showStuff(data) {
+
+            $('.matchName').text(data.name);
+            $('.matchPic').attr("src", data.photo);
+            $('#matchDisplay').modal("toggle");
+
+        }
+
+
         $.get("/api/friends").then((data) => {
 
-            $('.matchName').text(data[9].name);
-            $('.matchPic').attr("src", data[9].photo);
+            // $('.matchName').text(data.name);
+            // $('.matchPic').attr("src", data.photo);
 
-            $('#matchDisplay').modal("toggle");
+            // $('#matchDisplay').modal("toggle");
             // return json(data);
         })
     });
