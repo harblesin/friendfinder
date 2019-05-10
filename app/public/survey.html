@@ -193,7 +193,17 @@
     //} else {
 
 
+        function showStuff(data) {
+
+            $('.matchName').text(data.name);
+            $('.matchPic').attr("src", data.photo);
+            $('#matchDisplay').modal("toggle");
+
+        }
+
+
     $("#submitSurvey").on("click", (event) => {
+        console.log("buttonclicked")
         event.preventDefault();
         let newFriend = {
             name: $("#nameInput").val().trim(),
@@ -210,23 +220,19 @@
                 $("#q10 option:selected").attr("values")
             ]
         };
-        //scores.push($("#q1 "),$("#q2"),$("#q3"),$("#q4"));
+       
+        
         //console.log('newFriend', newFriend);
         $.post("/api/friends", newFriend, (data) => {
             console.log("survey.html", data);
             //alert("Thank you for taking our survey!");
             showStuff(data);
+            console.log("post sent");
 
 
         });
 
-        function showStuff(data) {
-
-            $('.matchName').text(data.name);
-            $('.matchPic').attr("src", data.photo);
-            $('#matchDisplay').modal("toggle");
-
-        }
+        
 
 
         $.get("/api/friends").then((data) => {
