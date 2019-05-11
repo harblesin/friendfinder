@@ -8,28 +8,47 @@ module.exports = function (app) {
         //let match;
 
         var userTotal = 0;
-        let friendTotals = [];
+        var friendTotals = [];
+        
         for (var i = 0; i < newFriend.scores.length; i++) {
-            userTotal += Math.abs(parseInt(newFriend.scores[i]));
+
+
+            userTotal += parseInt(newFriend.scores[i]);
+            let singleTotal = 0;
+            grabScores(friends[i], friendTotals, singleTotal)
+            //friendTotals.push(parseInt(friends[0].scores[i]) - userTotal);
             
-            friendTotals.push(parseInt(friends[0].scores[i]) - userTotal);
         };
 
+        function grabScores(thing, array, singleTotal){
+            
+            for(var u = 0; u < thing.scores.length; u++){
+                
+                singleTotal = parseInt(thing.scores[u]) + singleTotal;
+            }
+            math(array, singleTotal)
+            //return singleTotal;
+        }
+
+        function math(array, singleTotal){
+            array.push(Math.abs(singleTotal - userTotal));
+        }
         // for (var j = 0; j < friends.length; j++) {
         //     let holder = friends[j];
             
         // };
-        for(var k = 0; k < friends[k].scores.length; k++){
-                //friendTotals.push(Math.abs(parseInt(friends[k].scores[k]) - userTotal));
-                let holder; 
+        // for(var k = 0; k < friends[k].scores.length; k++){
+        //         //friendTotals.push(Math.abs(parseInt(friends[k].scores[k]) - userTotal));
+        //         let holder; 
                 
-            };
-        var match = Math.min(friendTotals);
+        //     };
+        //friendTotals.push()
+        var match = friendTotals.indexOf(Math.min(...friendTotals));
 
         //friends.push(newFriend);
         
         //res.json(friends[match]);
-        res.json(friendTotals)
+        res.json(friends[match]);
     });
 
     app.get('/api/friends', (req, res) => {
