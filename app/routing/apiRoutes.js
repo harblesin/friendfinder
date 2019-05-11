@@ -14,16 +14,27 @@ module.exports = function (app) {
 
 
             userTotal += parseInt(newFriend.scores[i]);
-            let singleTotal = 0;
-            grabScores(friends[i], friendTotals, singleTotal)
+            
             //friendTotals.push(parseInt(friends[0].scores[i]) - userTotal);
             
         };
 
+        if(i === 10){
+            for(var l = 0; l < friends.length; l++){
+
+            let singleTotal = 0;
+            grabScores(friends[l], friendTotals, singleTotal)
+            
+        }
+
+        }
+
+        
         function grabScores(thing, array, singleTotal){
             
             for(var u = 0; u < thing.scores.length; u++){
                 
+                console.log(thing.scores[u])
                 singleTotal = parseInt(thing.scores[u]) + singleTotal;
             }
             math(array, singleTotal)
@@ -31,6 +42,7 @@ module.exports = function (app) {
         }
 
         function math(array, singleTotal){
+            console.log(singleTotal)
             array.push(Math.abs(singleTotal - userTotal));
         }
         // for (var j = 0; j < friends.length; j++) {
@@ -47,7 +59,7 @@ module.exports = function (app) {
 
         //friends.push(newFriend);
         
-        //res.json(friends[match]);
+        //res.json(frie);
         res.json(friends[match]);
     });
 
