@@ -1,30 +1,32 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
 
+    <!--Bringing all appropriate cdns-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="shortcut icon" href="#">
     <title>Friend Finder</title>
 </head>
 
-<body>
+<body style="background-image: linear-gradient(to bottom right, rgb(139, 66, 133),pink)">
     <div class="container">
-        <h1>Survey</h1>
+        <h1 class='text-center'>Friend Finder Survey</h1>
         <hr>
         <h3><strong>About You</strong></h3>
         <div class="form-group">
-            <label for="nameInput">Name (Required)</label>
+            <label for="nameInput"><strong>Name (Required)</strong></label>
             <input type="text" class="form-control" id="nameInput" placeholder="Name Here">
-            <label for="photoLink">Link to Photo of Yourself (Required)</label>
+            <label for="photoLink"><strong>Link to Photo of Yourself (Required)</strong></label>
             <input type="text" class="form-control" id="photoInput" placeholder="Image Link Here">
         </div>
         <form>
             <div class="form-group">
-                <label for="photoUpload">Browse For Picture</label>
+                <label for="photoUpload"><strong>Browse For Picture</strong></label>
                 <input type="file" class="form-control-file" id="photoUpload">
             </div>
         </form>
@@ -44,7 +46,7 @@
         <hr>
         <h3><strong>Question Two</strong></h3>
         <div class="form-group">
-            <label for="q2"><strong>Which of these numbers do you like the best? 1,2,3,4 or 5?</strong></label>
+            <label for="q2"><strong>Which of these numbers do you like the best? 1, 2, 3, 4 or 5?</strong></label>
             <select class="custom-select" id="q2">
                 <option selected>Choose One . . .</option>
                 <option values="1">1 (Strongly Disagree</option>
@@ -57,7 +59,7 @@
         <hr>
         <h3><strong>Question Three</strong></h3>
         <div class="form-group">
-            <label for="q3"><strong>You see popcorn in someone elses hands and your suppress the desire
+            <label for="q3"><strong>You see popcorn in someone else's hands and your suppress the desire
                     to knock it out of their hands.
                 </strong></label>
             <select class="custom-select" id="q3">
@@ -96,7 +98,7 @@
         </div>
         <h3><strong>Question Six</strong></h3>
         <div class="form-group">
-            <label for="q6"><strong>34 + 23 = 1 big number</strong></label>
+            <label for="q6"><strong>34 + 23 = 1 big number.</strong></label>
             <select class="custom-select" id="q6">
                 <option selected>Choose One . . .</option>
                 <option values="1">1 (Strongly Disagree</option>
@@ -132,7 +134,7 @@
         </div>
         <h3><strong>Question Nine</strong></h3>
         <div class="form-group">
-            <label for="q9"><strong>All rocks are actually alive</strong></label>
+            <label for="q9"><strong>All rocks are actually alive.</strong></label>
             <select class="custom-select" id="q9">
                 <option selected>Choose One . . .</option>
                 <option values="1">1 (Strongly Disagree</option>
@@ -157,94 +159,128 @@
             </select>
         </div>
 
+        <!--Submit button-->
         <div class="text-right">
-            <button type="submit" class="btn btn-primary btn-md" id="submitSurvey">
-                <span class="fa fa-fire"></span>Finish!
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitSurvey">
+                <span class="fa fa-tasks"></span> Finish!
             </button>
         </div>
     </div>
-    <div class="modal" id="matchDisplay">
+
+    <!--Modal structure-->
+    <div class="modal fade" id="matchDisplay">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title">Best Match</h2>
+                    <h1 class="modal-title">
+                        <span class ="fa fa-check-circle"></span>
+                        Best Match</h1>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="matchName"></p>
-                    <img class="matchPic" style="margin: auto">
+                    <h2 class="matchName"></h2>
+                    <img class="matchPic rounded mx-auto d-block" style="margin: auto">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">
+                        <span class = "fa fa-ban"></span>
+                        Close</button>
                 </div>
             </div>
         </div>
     </div>
+    <hr>
+
+    <!--Footer Creation-->
+    <footer class="page-footer">
+        <div class="container">
+            <p><a href="/api/friends">API Friends List</a> |
+                <a href="https://github.com/harblesin/friendfinder">GitHub Repo</a></p>
+        </div>
+    </footer>
 </body>
 
 <script>
-    //form validation
-    var allInput = true;
-    //if ($("option:select") == "") {
-    console.log("Please fill all out forms!");
 
-    //} else {
+    //Callback function takes that populates and toggles modal
+    function showStuff(data) {
+        $('.matchName').text(data.name);
+        $('.matchPic').attr("src", data.photo);
+        $('#matchDisplay').modal("toggle");
+    };
 
-
-        function showStuff(data) {
-
-            $('.matchName').text(data.name);
-            $('.matchPic').attr("src", data.photo);
-            $('#matchDisplay').modal("toggle");
-
-        }
-
-
+    //Button logic activated upon click
     $("#submitSurvey").on("click", (event) => {
-        console.log("buttonclicked")
         event.preventDefault();
-        let newFriend = {
-            name: $("#nameInput").val().trim(),
-            photo: $("#photoInput").val().trim(),
-            scores: [parseInt($("#q1 option:selected").attr("values")),
-                $("#q2 option:selected").attr("values"),
-                $("#q3 option:selected").attr("values"),
-                $("#q4 option:selected").attr("values"),
-                $("#q5 option:selected").attr("values"),
-                $("#q6 option:selected").attr("values"),
-                $("#q7 option:selected").attr("values"),
-                $("#q8 option:selected").attr("values"),
-                $("#q9 option:selected").attr("values"),
-                $("#q10 option:selected").attr("values")
-            ]
+
+        //Form validation for all inputs
+        function validated() {
+
+            //Reference variable for validation
+            var filled = true;
+
+            //Checks if name field is empty
+            if ($("#nameInput").val() === "") {
+                filled = false;
+            };
+
+            //Checks if at least one of the image inputs are filled
+            if ($("#photoInput").val() === "" &&
+                $("#photoUpload").val() === "") {
+                filled = false;
+            };
+
+            //Checks if all of the questions have been answered
+            $(".custom-select").each(function () {
+                if ($(this).val() === "") {
+                    filled = false;
+                }
+            });
+
+            //If none of the conditionals are tripped, returns the
+            //reference variable as its original boolean
+            return filled;
         };
-       
-        
-        //console.log('newFriend', newFriend);
-        $.post("/api/friends", newFriend, (data) => {
-            console.log("survey.html", data);
-            //alert("Thank you for taking our survey!");
-            showStuff(data);
-            console.log("post sent");
 
+        //If all required fields are filled, create new object
+        //to enter into the POST
+        if (validated()) {
 
-        });
+            //Object with all input values(name and photo go nowhere
+            //due to the lack of need, but grabbed for effect, or future
+            //updates)
+            let newFriend = {
+                name: $("#nameInput").val().trim(),
+                photo: $("#photoInput").val().trim(),
+                scores: [parseInt($("#q1 option:selected").attr("values")),
+                    $("#q2 option:selected").attr("values"),
+                    $("#q3 option:selected").attr("values"),
+                    $("#q4 option:selected").attr("values"),
+                    $("#q5 option:selected").attr("values"),
+                    $("#q6 option:selected").attr("values"),
+                    $("#q7 option:selected").attr("values"),
+                    $("#q8 option:selected").attr("values"),
+                    $("#q9 option:selected").attr("values"),
+                    $("#q10 option:selected").attr("values")
+                ]
+            };
 
-        
+            //Ajax POST request to the appropriate route in the
+            //server, passing along the object, then passing the
+            //returned data into the modal function defined above
+            $.post("/api/friends", newFriend, (data) => {
+                console.log("survey.html", data);
+                showStuff(data);
+            });
 
-
-        $.get("/api/friends").then((data) => {
-
-            // $('.matchName').text(data.name);
-            // $('.matchPic').attr("src", data.photo);
-
-            // $('#matchDisplay').modal("toggle");
-            // return json(data);
-        })
+        //Still with the aforementioned conditional for form validation, if
+        //if the required aren't filled, prompts the user
+        } else if (!validated()) {
+            alert("Ya gotta fill out all the forms to get a match!")
+        };
     });
-    // }
 </script>
 
 </html>

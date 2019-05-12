@@ -1,3 +1,4 @@
+//Object for reference data
 var friends = [
     {
         "name": "Tim",
@@ -70,4 +71,5 @@ var friends = [
     }
 ];
 
+//exports the array of objects for use
 module.exports = friends;
