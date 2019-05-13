@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -173,7 +174,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title">
-                        <span class ="fa fa-check-circle"></span>
+                        <span class="fa fa-check-circle"></span>
                         Best Match</h1>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -185,7 +186,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">
-                        <span class = "fa fa-ban"></span>
+                        <span class="fa fa-ban"></span>
                         Close</button>
                 </div>
             </div>
@@ -203,7 +204,6 @@
 </body>
 
 <script>
-
     //Callback function takes that populates and toggles modal
     function showStuff(data) {
         $('.matchName').text(data.name);
@@ -234,7 +234,7 @@
 
             //Checks if all of the questions have been answered
             $(".custom-select").each(function () {
-                if ($(this).val() === "") {
+                if ($(this).val() === "Choose One . . .") {
                     filled = false;
                 }
             });
@@ -267,6 +267,16 @@
                 ]
             };
 
+            //Clears all fields upon submission
+            $(".btn-warning").on("click", function () {
+                $("#nameInput").val("");
+                ($("#photoInput").val("") && $("#photoUpload").val(""));
+                $(".custom-select").each(function () {
+                    $(this).val("Choose One . . . ");
+                });
+            })
+
+
             //Ajax POST request to the appropriate route in the
             //server, passing along the object, then passing the
             //returned data into the modal function defined above
@@ -275,8 +285,8 @@
                 showStuff(data);
             });
 
-        //Still with the aforementioned conditional for form validation, if
-        //if the required aren't filled, prompts the user
+            //Still with the aforementioned conditional for form validation, if
+            //if the required aren't filled, prompts the user
         } else if (!validated()) {
             alert("Ya gotta fill out all the forms to get a match!")
         };
