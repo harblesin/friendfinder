@@ -72,6 +72,9 @@ module.exports = function (app) {
         //reference the correct friend in the array
         var match = friendTotals.indexOf(Math.min(...friendTotals));
 
+        //Adds the user to the list of friends to match with
+        friends.push(newFriend);
+
         //returns the friend with best match
         res.json(friends[match]);
     });
